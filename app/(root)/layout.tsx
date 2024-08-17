@@ -9,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const loggedIn = {firstName: 'Vaibhav', lastName: 'Parikh'};
+  const loggedIn = {firstName: 'Vaibhav', lastName: 'Parikh', email:"parikhvaibhav19@gmail.com"};
 
 
   return (
@@ -22,9 +22,9 @@ export default function RootLayout({
               <MobileNav user={loggedIn}/>
             </div>
           </div>
-
+          {children}
         </div>
-        {children}
+
     </main>
   );
 }
