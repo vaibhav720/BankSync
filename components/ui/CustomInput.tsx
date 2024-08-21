@@ -15,11 +15,11 @@ import { Input } from "@/components/ui/input";
 import {Control} from 'react-hook-form';
 import { authFormSchema } from '@/lib/utils';
 
-
+const fontSchema = authFormSchema('sign-up')
 
 interface CustomInput {
-    control: Control<z.infer<typeof authFormSchema>>,
-    name: FieldPath<z.infer<typeof authFormSchema>>,
+    control: Control<z.infer<typeof fontSchema>>,
+    name: FieldPath<z.infer<typeof fontSchema>>,
     label:string,
     placeholder: string,
     inputType:string,
