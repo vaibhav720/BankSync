@@ -1,8 +1,7 @@
 import HeaderBox from '@/components/ui/HeaderBox';
 import RightSideBar from '@/components/ui/RightSideBar'
 import TotalBalanceBox from '@/components/ui/TotalBalanceBox'
-import { getLoggedInUser } from '@/lib/actions/user.action'
-import { cookies } from "next/headers";
+import { getLoggedInUser } from '@/lib/actions/user.actions'
 
 
 const Home = async ( ) => {
