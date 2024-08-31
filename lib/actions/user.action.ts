@@ -12,7 +12,6 @@ export const signIn = async ({ email, password }: signInProps) => {
     const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
     
-    console.log("session.secret    ",session.secret);
     await cookies().set("appwrite-session", session.secret, {
       // domain: "localhost",
       path: "/",
@@ -21,8 +20,6 @@ export const signIn = async ({ email, password }: signInProps) => {
       secure: false, 
     });
 
-    const sessionCookie = cookies().get("appwrite-session");
-  console.log("Retrieved session cookie: ", sessionCookie);
     
     return parseStringify(session);
   } catch (error) {
@@ -72,7 +69,6 @@ export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
     const user = await account.get();
-    console.log("Logged-in user:", user.name);
 
     return parseStringify(user);
   } catch (error) {
@@ -81,3 +77,14 @@ export async function getLoggedInUser() {
   }
 }
 
+
+export const logoutAccount = async()=>{
+  try{
+    const {account} = await createSessionClient();
+    await cookies().delete('appwrite-session');
+    await account.deleteSession('current');
+  }catch(error){
+    console.error("logout error",error);
+    return null;
+  }
+}
