@@ -39,15 +39,19 @@ function AuthForm({ type }: { type: string }) {
     try {
       if(type==='sign-up'){
         const newUser = await signUp(data);
-        setUser(newUser)
+        console.log("sign up set data  ")
+        console.log(newUser)
+        setUser(newUser.$id)
 
-        router.push('/');
+        // router.push({pathname:'/',query:{userId:newUser.$id}});
       }
       else if(type === 'sign-in'){
-        // const response = await signIn({email:data.email,password:data.password})
-        // if(response){
-        //   router.push('/');
-        // }
+        const response = await signIn({email:data.email,password:data.password})
+        console.log("sign in response")
+        console.log(response);
+        if(response){
+          router.push('/');
+        }
       }
     } catch (error) {
       console.log(error)
@@ -55,7 +59,7 @@ function AuthForm({ type }: { type: string }) {
     finally{
       setIsLoading(false);
     }
-    console.log(data);
+    // console.log(data);
   }
 
   return (
@@ -127,7 +131,7 @@ function AuthForm({ type }: { type: string }) {
                     control={form.control}
                     name="state"
                     inputType="text"
-                    label="state"
+                    label="State"
                     placeholder="Enter your state"
                   />
 
