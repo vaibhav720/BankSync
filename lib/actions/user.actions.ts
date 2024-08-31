@@ -1,20 +1,20 @@
-"use server";
+'use server';
 
 import { ID, Query } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../appwrite";
-import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils";
-import { error } from "console";
 import { cookies } from "next/headers";
+import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils";
 import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid";
-import { plaidClient } from "../plaid";
-import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
+
+import { plaidClient } from '@/lib/plaid';
 import { revalidatePath } from "next/cache";
+import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
+
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
   APPWRITE_BANK_COLLECTION_ID: BANK_COLLECTION_ID,
 } = process.env;
-
 
 export const getUserInfo = async ({ userId }: getUserInfoProps) => {
   try {
@@ -32,18 +32,16 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
   }
 }
 
-
 export const signIn = async ({ email, password }: signInProps) => {
   try {
     const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
-    
-    await cookies().set("appwrite-session", session.secret, {
-      // domain: "localhost",
+
+    cookies().set("appwrite-session", session.secret, {
       path: "/",
       httpOnly: true,
       sameSite: "strict",
-      secure: false, 
+      secure: true,
     });
 
     const user = await getUserInfo({ userId: session.userId }) 
@@ -51,16 +49,13 @@ export const signIn = async ({ email, password }: signInProps) => {
     return parseStringify(user);
   } catch (error) {
     console.error('Error', error);
-    return null;
   }
 }
 
-
-
 export const signUp = async ({ password, ...userData }: SignUpParams) => {
-  const { email, firstName, lastName } = userData;  
+  const { email, firstName, lastName } = userData;
   
-    let newUserAccount;
+  let newUserAccount;
 
   try {
     const { account, database } = await createAdminClient();
@@ -101,7 +96,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
       path: "/",
       httpOnly: true,
       sameSite: "strict",
-      secure: false,
+      secure: true,
     });
 
     return parseStringify(newUser);
@@ -110,35 +105,31 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
   }
 }
 
-// ... your initilization functions
-
 export async function getLoggedInUser() {
-  
-
-  // Proceed with retrieving user data
   try {
     const { account } = await createSessionClient();
-    const user = await account.get();
+    const result = await account.get();
+
+    const user = await getUserInfo({ userId: result.$id})
 
     return parseStringify(user);
   } catch (error) {
-    console.error("Error during session retrieval:", error);
+    console.log(error)
     return null;
   }
 }
 
+export const logoutAccount = async () => {
+  try {
+    const { account } = await createSessionClient();
 
-export const logoutAccount = async()=>{
-  try{
-    const {account} = await createSessionClient();
-    await cookies().delete('appwrite-session');
+    cookies().delete('appwrite-session');
+
     await account.deleteSession('current');
-  }catch(error){
-    console.error("logout error",error);
+  } catch (error) {
     return null;
   }
 }
-
 
 export const createLinkToken = async (user: User) => {
   try {
@@ -302,4 +293,3 @@ export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps)
     console.log(error)
   }
 }
-
