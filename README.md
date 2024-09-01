@@ -43,6 +43,18 @@ BankSync is a powerful financial management tool that connects with multiple ban
 
 ### 👉 And Many More...
 - The project emphasizes clean code architecture and reusability, making it easy to maintain and extend. Additional features include advanced error handling, modular components, and performance optimization.
+##Preview
+<img width="1470" alt="Screenshot 2024-09-01 at 2 02 07 PM" src="https://github.com/user-attachments/assets/16fd1308-479f-45f6-adb5-695aca6d0da3">
+<img width="1470" alt="Screenshot 2024-09-01 at 2 02 36 PM" src="https://github.com/user-attachments/assets/229ff5d7-fb72-4514-82c7-67bc56124c62">
+<img width="1470" alt="Screenshot 2024-09-01 at 2 02 54 PM" src="https://github.com/user-attachments/assets/6923e82c-ae92-428b-bfa3-4a0026407ae7"><img width="1470" alt="Screenshot 2024-09-01 at 2 03 06 PM" src="https://github.com/user-attachments/assets/515954a9-8dd0-4ace-a41f-ff7f9950443f">
+<img width="1470" alt="Screenshot 2024-09-01 at 2 03 15 PM" src="https://github.com/user-attachments/assets/e009ccd9-72a4-410d-8722-c10fcfa3b0e3"><img width="1470" alt="Screenshot 2024-09-01 at 2 03 31 PM" src="https://github.com/user-attachments/assets/5cc3ac3d-4532-4097-9a76-7572355f3eff">
+
+
+
+
+
+
+
 
 ## 🚀 Getting Started
 
@@ -50,7 +62,7 @@ To get started with BankSync, follow the installation instructions below:
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/your-username/BankSync.git
+    git clone https://github.com/vaibhav720/BankSync.git
     cd BankSync
     ```
 
